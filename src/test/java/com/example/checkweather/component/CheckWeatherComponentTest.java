@@ -5,6 +5,7 @@ import com.example.checkweather.service.CheckWeatherService;
 import com.example.checkweather.utils.ApiKeyValidator;
 import com.example.checkweather.utils.RateLimiter;
 import com.example.checkweather.exception.ApiErrorHandler;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -22,9 +23,9 @@ import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(classes = CheckWeatherApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RequiredArgsConstructor
 class CheckWeatherComponentTest {
 
-    @Autowired
     private WebTestClient webTestClient;
 
     @MockBean

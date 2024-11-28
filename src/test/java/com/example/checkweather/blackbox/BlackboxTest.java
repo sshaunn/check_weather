@@ -1,5 +1,6 @@
 import com.example.checkweather.CheckWeatherApiApplication;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +15,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = {CheckWeatherApiApplication.class})
 @ActiveProfiles("test")
+@RequiredArgsConstructor
 public class BlackboxTest {
 
     private static WireMockServer wm;
 
-    @Autowired
     private TestRestTemplate rest;
 
     private final String appUrl = "/api/weather?city=London&country=gb&apiKey=test-api-key2";
