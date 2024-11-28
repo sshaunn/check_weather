@@ -4,6 +4,9 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+terraform/.terraform/*
+terraform/**tfstate**
+terraform/**lock**
 
 ### STS ###
 .apt_generated
