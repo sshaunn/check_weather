@@ -1,0 +1,29 @@
+name: Spring Boot CI/CD with Gradle
+
+on:
+  push:
+    branches:
+      - "feature/**"
+      - "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: setup gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: define shell permit
+        run: chmod +x ./gradlew
+
+      - names: build
+        run: ./gradlew clean build -x test
