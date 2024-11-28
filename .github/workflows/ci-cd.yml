@@ -25,5 +25,5 @@ jobs:
       - name: define shell permit
         run: chmod +x ./gradlew
 
-      - names: build
+      - name: build
         run: ./gradlew clean build -x test
