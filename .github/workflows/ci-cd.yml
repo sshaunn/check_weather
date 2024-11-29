@@ -47,5 +47,37 @@ jobs:
             ${{ env.DOCKER_HUB_REPO }}:${{ env.IMAGE_TAG }}
             ${{ env.DOCKER_HUB_REPO }}:latest
           file: ./Dockerfile
-#          cache-from: type=local,
-            
+
+  deploy-infrastructure:
+    needs: build
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: 'ap-southeast-2'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY }}
+
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.10.0'
+
+      - name: permit terraform script
+        run: chmod +x ./scripts/terraform-eks.sh
+
+      - name: init terraform
+        run: ./scripts/terraform-eks.sh init
+
+      - name: plan terraform
+        run: ./scripts/terraform-eks.sh plan
+
+      - name: apply terraform
+        run: ./scripts/terraform-eks.sh apply
+
+
