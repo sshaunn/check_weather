@@ -5,7 +5,8 @@ set -e
 ACTION=""
 REGION=ap-southeast-2
 CLUSTER_NAME="eks-cluster"
-TERRAFORM_DIR="${GITHUB_WORKSPACE}/terraform"
+#TERRAFORM_DIR="${GITHUB_WORKSPACE}/terraform"
+TERRAFORM_DIR="../terraform"
 
 function check_aws_credentials {
   if ! aws sts get-caller-identity &>/dev/null; then
@@ -48,8 +49,8 @@ if [ -z "$ACTION" ]; then
 fi
 
 echo "Changing to Terraform directory: $TERRAFORM_DIR"
-cd ${GITHUB_WORKSPACE}
-ls -ln
+#cd ${GITHUB_WORKSPACE}
+#ls -ln
 
 cd "$TERRAFORM_DIR"
 
