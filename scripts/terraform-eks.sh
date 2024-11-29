@@ -5,13 +5,7 @@ set -e
 ACTION=""
 REGION=ap-southeast-2
 CLUSTER_NAME="eks-cluster"
-if [ -n "$GITHUB_WORKSPACE" ]; then
-    # Running in GitHub Actions
-    TERRAFORM_DIR="${GITHUB_WORKSPACE}"
-else
-    # Running locally
-    TERRAFORM_DIR="../terraform"
-fi
+TERRAFORM_DIR="${GITHUB_WORKSPACE}/terraform"
 
 function check_aws_credentials {
   if ! aws sts get-caller-identity &>/dev/null; then
@@ -54,6 +48,9 @@ if [ -z "$ACTION" ]; then
 fi
 
 echo "Changing to Terraform directory: $TERRAFORM_DIR"
+cd ${GITHUB_WORKSPACE}
+ls -ln
+
 cd "$TERRAFORM_DIR"
 
 echo -e "Running terraform in region=${REGION}"
