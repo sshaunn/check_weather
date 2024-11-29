@@ -5,7 +5,13 @@ set -e
 ACTION=""
 REGION=ap-southeast-2
 CLUSTER_NAME="eks-cluster"
-TERRAFORM_DIR="../terraform"
+if [ -n "$GITHUB_WORKSPACE" ]; then
+    # Running in GitHub Actions
+    TERRAFORM_DIR="${GITHUB_WORKSPACE}"
+else
+    # Running locally
+    TERRAFORM_DIR="../terraform"
+fi
 
 function check_aws_credentials {
   if ! aws sts get-caller-identity &>/dev/null; then
