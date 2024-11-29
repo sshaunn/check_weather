@@ -4,7 +4,7 @@ metadata:
   name: check-weather
   namespace: check-weather
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 8080
