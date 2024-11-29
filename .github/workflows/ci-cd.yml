@@ -11,45 +11,45 @@ env:
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
-#  build:
-#    runs-on: ubuntu-22.04
-#
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - name: setup
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-#
-#      - name: setup gradle
-#        uses: gradle/gradle-build-action@v2
-#
-#      - name: define shell permit
-#        run: chmod +x ./gradlew
-#
-#      - name: build
-#        run: ./gradlew clean build
-#
-#      - name: login
-#        uses: docker/login-action@v2
-#        with:
-#          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-#          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-#
-#      - name: build and push
-#        uses: docker/build-push-action@v4
-#        with:
-#          context: .
-#          push: 'true'
-#          tags: |
-#            ${{ env.DOCKER_HUB_REPO }}:${{ env.IMAGE_TAG }}
-#            ${{ env.DOCKER_HUB_REPO }}:latest
-#          file: ./Dockerfile
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: setup gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: define shell permit
+        run: chmod +x ./gradlew
+
+      - name: build
+        run: ./gradlew clean build
+
+      - name: login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: 'true'
+          tags: |
+            ${{ env.DOCKER_HUB_REPO }}:${{ env.IMAGE_TAG }}
+            ${{ env.DOCKER_HUB_REPO }}:latest
+          file: ./Dockerfile
 
   deploy-infrastructure:
-#    needs: build
+    needs: build
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/master'
 
